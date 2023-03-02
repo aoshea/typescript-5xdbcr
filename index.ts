@@ -3,7 +3,7 @@ import './style.css';
 
 // Write TypeScript code!
 const appDiv: HTMLElement = document.getElementById('app');
-appDiv.innerHTML = `<h1>Fullscreen test</h1>`;
+appDiv.innerHTML = `<h1>Fullscreen test2</h1>`;
 
 const svgDiv: SVGElement = document.querySelector('svg');
 
@@ -12,5 +12,5 @@ layout();
 
 function layout() {
   svgDiv.setAttribute('width', '100%');
-  svgDiv.setAttribute('min-height', window.innerHeight + 'px');
+  svgDiv.setAttribute('height', window.innerHeight + 'px');
 }
