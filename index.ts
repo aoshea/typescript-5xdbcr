@@ -3,7 +3,7 @@ import './style.css';
 
 // physics constants
 const FRICTION = 0.975;
-const REST = 24;
+const REST = 23;
 
 // point class
 function Point(x, y) {
@@ -79,10 +79,6 @@ const blob_els = [];
 // game internal count
 let t = 0;
 
-// core element
-const appDiv: HTMLElement = document.getElementById('app');
-appDiv.innerHTML = `<h1>Octopuz</h1>`;
-
 // svg element
 const svgDiv: SVGElement = document.querySelector('svg');
 
@@ -95,16 +91,21 @@ function layout() {
   svgDiv.setAttribute('height', window.innerHeight + 'px');
 }
 
+function getPointOnCircle(i) {
+  const cx = 50;
+  const cy = 50;
+  const angle = (Math.PI / 4) * i;
+  const radius = 30;
+  const x = cx + Math.sin(angle) * radius;
+  const y = cy + Math.cos(angle) * radius;
+  return { x, y };
+}
+
 // init game
 function init() {
   // create letter blobs
   for (let i = 0; i < 8; ++i) {
-    const cx = 50;
-    const cy = 50;
-    const angle = (Math.PI / 4) * i;
-    const radius = 10;
-    const x = cx + Math.sin(angle) * radius;
-    const y = cy + Math.cos(angle) * radius;
+    const { x, y } = getPointOnCircle(i);
     blobs.push(new Blob(new Point(x, y), 'A'));
     if (i > 0) {
       // create constraint
@@ -112,8 +113,17 @@ function init() {
       constraints.push(constraint);
     }
   }
+  const constraint = new Constraint(
+    REST,
+    blobs[blobs.length - 1].p,
+    blobs[0].p
+  );
+  constraints.push(constraint);
   for (let i = 0; i < 8; ++i) {
+    const { x, y } = getPointOnCircle(i);
     const blob_el = document.querySelector('g#b-' + i);
+    const debug_el = document.querySelector('g#d-' + i);
+    debug_el.setAttribute('transform', `translate(${x}, ${y})`);
     blob_els.push(blob_el);
   }
 
@@ -123,7 +133,6 @@ function init() {
 // loop
 function gameloop() {
   window.requestAnimationFrame(gameloop);
-
   update();
   draw();
 }
