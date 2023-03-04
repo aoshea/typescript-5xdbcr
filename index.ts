@@ -124,10 +124,16 @@ function init() {
     const blob_el = document.querySelector('g#b-' + i);
     const debug_el = document.querySelector('g#d-' + i);
     debug_el.setAttribute('transform', `translate(${x}, ${y})`);
+    blob_el.addEventListener('mousedown', handler, false);
     blob_els.push(blob_el);
   }
 
   gameloop();
+}
+
+// handle click
+function handler(e) {
+  console.log(e.currentTarget);
 }
 
 // loop
