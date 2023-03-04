@@ -2,8 +2,8 @@
 import './style.css';
 
 // physics constants
-const FRICTION = 0.975;
-const REST = 23;
+const FRICTION = 0.99995;
+const REST = 24;
 
 // point class
 function Point(x, y) {
@@ -78,9 +78,18 @@ const blobs = [];
 const blob_els = [];
 // game internal count
 let t = 0;
+// game input text
+let input = '';
+// input state set initially
+let touch = false;
 
 // svg element
 const svgDiv: SVGElement = document.querySelector('svg');
+// debug ele
+const debugEl: HTMLElement = document.querySelector('.zz--debug');
+// input el
+const inputEl = document.querySelector('input[name="input"]');
+console.log(inputEl);
 
 window.addEventListener('resize', layout);
 layout();
@@ -103,6 +112,9 @@ function getPointOnCircle(i) {
 
 // init game
 function init() {
+  // set input el
+  renderInput();
+
   // create letter blobs
   for (let i = 0; i < 8; ++i) {
     const { x, y } = getPointOnCircle(i);
@@ -125,6 +137,10 @@ function init() {
     const debug_el = document.querySelector('g#d-' + i);
     debug_el.setAttribute('transform', `translate(${x}, ${y})`);
     blob_el.addEventListener('mousedown', handler, false);
+    blob_el.addEventListener('mouseup', handler, false);
+    blob_el.addEventListener('touchstart', handler, false);
+    blob_el.addEventListener('touchend', handler, false);
+
     blob_els.push(blob_el);
   }
 
@@ -133,7 +149,38 @@ function init() {
 
 // handle click
 function handler(e) {
-  console.log(e.currentTarget);
+  e.stopPropagation();
+  debug(e.type);
+  switch (e.type) {
+    case 'touchstart':
+      touch = true;
+      break;
+    case 'touchend':
+      if (touch) {
+        if (input.length < 8) {
+          input += e.currentTarget.textContent.trim();
+        }
+        renderInput();
+      }
+      break;
+    case 'mouseup':
+      if (!touch) {
+        if (input.length < 8) {
+          input += e.currentTarget.textContent.trim();
+        }
+        renderInput();
+      }
+      break;
+    default:
+      console.log('unhandled?', e.type);
+  }
+}
+
+// debug looging
+let log = '';
+function debug(message) {
+  log += message + '<br>';
+  debugEl.innerHTML = log;
 }
 
 // loop
@@ -163,4 +210,9 @@ function draw() {
     b_el.setAttribute('transform', `translate(${x}, ${y})`);
   }
   ++t;
+}
+
+// update input element
+function renderInput() {
+  inputEl.setAttribute('value', input);
 }

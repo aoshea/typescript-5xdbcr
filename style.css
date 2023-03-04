@@ -44,7 +44,7 @@ svg circle + text {
 
 html,
 body {
-  background-color: antiquewhite;
+  background-color: #f0f0f0;
   margin: 0;
   padding: 0;
 }
@@ -170,4 +170,41 @@ footer.zz--strip {
   font-weight: 700;
   text-align: center;
   text-transform: uppercase;
+}
+
+.zz--debug {
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  font-family: monospace;
+  font-size: 10px;
+  opacity: 0.2;
+}
+
+.zz--controls {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.zz--controls button {
+  font-size: 24px;
+  /*
+  padding: 0.25rem 1rem;
+  font-size: 24px;
+  background-color: var(--bg-alt);
+  appearance: none;
+  border-radius: 4px;
+  color: var(--fg);
+  border: none;
+  */
+}
+
+.zz--controls button:nth-child(1) {
+  margin-right: 0.25rem;
 }
