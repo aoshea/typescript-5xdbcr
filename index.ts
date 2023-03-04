@@ -3,7 +3,7 @@ import './style.css';
 
 // physics constants
 const FRICTION = 0.99995;
-const REST = 24;
+const REST = 23.4;
 
 // point class
 function Point(x, y) {
