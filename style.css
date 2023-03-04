@@ -1,8 +1,25 @@
+:root {
+  --bg: white;
+  --fg: black;
+  --select-bg: cornflowerblue;
+  --select-text: white;
+  --bg-alt: orange;
+  --bg-button: orangered;
+  --serif: Georgia, 'Times New Roman', Times, serif;
+  --sans-serif: --apple-system, sans-serif;
+  --border-width: 2px;
+}
+
 h1,
 h2 {
-  font-family: Lato;
   margin: 0;
   padding: 0;
+  font-family: var(--serif);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.015rem;
+  text-align: center;
 }
 
 svg {
@@ -20,5 +37,5 @@ body {
 }
 
 body {
-  box-shadow: inset 0 0 4px 4px blue;
+  box-shadow: inset 0 0 4px 4px rgba(0, 0, 255, 0.1);
 }
