@@ -52,8 +52,9 @@ g[id^='b-'] {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 g[id^='b-'] circle {
-  fill: var(--bg-alt);
-  stroke: none;
+  fill: transparent;
+  stroke: var(--bg-alt);
+  stroke-width: 1px;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 g[id^='b-']:hover circle {
