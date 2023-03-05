@@ -286,7 +286,7 @@ footer.zz--strip {
 }
 
 .zz--debug {
-  position: absolute;
+  position: fixed;
   top: 3rem;
   left: 0;
   font-family: monospace;
