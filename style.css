@@ -12,6 +12,10 @@
   --border-width: 1px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 h1,
 h2 {
   margin: 0;
@@ -66,6 +70,16 @@ g[id^='b-']:active circle {
   fill: var(--bg-alt2);
   stroke: none;
   transform: scale(0.9);
+}
+
+g[id^='b-'].inactive circle {
+  transform: scale(0.9);
+  stroke-dasharray: 3;
+  stroke: var(--bg-alt2);
+}
+
+g[id^='b-'].inactive text {
+  opacity: 0;
 }
 
 g[id^='b-'] text {
@@ -190,11 +204,16 @@ footer.zz--strip {
   align-items: center;
   text-align: center;
   width: 100%;
-  padding: 1rem;
 }
 
 .zz--controls button {
   font-size: 24px;
+  appearance: none;
+  border: 4px solid var(--fg);
+  border-radius: 8px;
+  background-color: var(--bg-alt);
+  margin: 0.25rem 0.25rem 1rem;
+  padding: 0.25rem 0.5rem;
   /*
   padding: 0.25rem 1rem;
   font-size: 24px;
@@ -206,6 +225,6 @@ footer.zz--strip {
   */
 }
 
-.zz--controls button:nth-child(1) {
-  margin-right: 0.25rem;
+.zz--controls button:nth-child(2) {
+  padding: 0.25rem 2rem;
 }

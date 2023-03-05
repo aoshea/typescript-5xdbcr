@@ -113,39 +113,6 @@ function getPointOnCircle(i) {
   return { x, y };
 }
 
-function getZiggaPoint(i) {
-  const start = 0;
-  const step = 16;
-
-  // i = 0, row = 0
-  // i = 1, row = 0
-  // i = 2, row = 0
-  // i = 3, row = 0
-  // i = 4, row = 1
-  // i = 5, row = 1
-  // i = 6, row = 1
-  // i = 7, row = 2
-
-  let x = 0;
-  let y = 0;
-  let col = 0;
-  let row = 0;
-
-  let width = i >= 4 ? (i <= 7 ? 3 : 2) : 4;
-  let offset = width === 3 ? 1 : 0;
-
-  col = Math.floor((i - offset) % width);
-  row = Math.floor((i - offset) / width);
-
-  let width_offset = row === 2 ? offset * 24 : offset * 8;
-
-  console.log('i', i, 'row', row, 'col', col);
-  x = width_offset + col * step + start;
-  y = 50 - row * step;
-
-  return { x, y };
-}
-
 // init game
 function init() {
   // set input el
@@ -168,15 +135,18 @@ function init() {
   );
   constraints.push(constraint);
   for (let i = 0; i < 8; ++i) {
-    const { x, y } = getZiggaPoint(i);
     const blob_el = document.querySelector('g#b-' + i);
     const debug_el = document.querySelector('g#d-' + i);
-    debug_el.setAttribute('transform', `translate(${x}, ${y})`);
+    // debug_el.setAttribute('transform', `translate(${x}, ${y})`);
     // blob_el.setAttribute('transform', `translate(${x}, ${y})`);
     blob_el.addEventListener('mousedown', handler, false);
     blob_el.addEventListener('mouseup', handler, false);
     blob_el.addEventListener('touchstart', handler, false);
     blob_el.addEventListener('touchend', handler, false);
+
+    if (i > 2) {
+      blob_el.classList.add('inactive');
+    }
 
     blob_els.push(blob_el);
   }
