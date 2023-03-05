@@ -165,12 +165,10 @@ g[id^='b-'].inactive circle {
 
 g[id^='b-'].inactive text {
   opacity: 0;
-  transform: scale(0.75);
 }
 
 g[id^='b-'].active text {
   opacity: 1;
-  transform: scale(1);
 }
 
 g[id^='b-'] text {
@@ -184,7 +182,7 @@ g[id^='b-'] text {
   transition-delay: 1s;
   transition-duration: 1s;
   transition-timing-function: ease-out;
-  transition-property: transform, opacity;
+  transition-property: opacity;
 }
 
 g[id^='d-'] {
@@ -321,7 +319,7 @@ footer.zz--strip {
 
 .zz--plums {
   position: absolute;
-  top: 3rem;
+  top: 4rem;
   right: 0;
   left: 0;
   text-align: center;

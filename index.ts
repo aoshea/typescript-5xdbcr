@@ -223,7 +223,6 @@ function getChar(i) {
   const wordsets = window.ZZ_INFO.split(',')[0].split('|');
   const set = wordsets[game_level];
   const result = set.charAt(i);
-  console.log('res', result);
   return result;
 }
 
