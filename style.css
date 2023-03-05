@@ -60,10 +60,12 @@ body {
 g[id^='b-'] {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
+
 g[id^='b-'] circle {
-  fill: var(--bg-alt);
-  stroke: none;
+  fill: transparent;
+  stroke: var(--bg-alt);
   stroke-width: 1px;
+  stroke-dasharray: 3;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   transition-delay: 0;
   transition-duration: 0.5s;
@@ -71,9 +73,49 @@ g[id^='b-'] circle {
   transition-property: transform;
 }
 
-g[id^='b-'].active circle {
-  transform: rotate(90deg) scale(1);
+g[id^='b-'] circle:nth-child(1) {
+  transform: scale(0.9);
 }
+
+g[id^='b-'] circle + circle {
+  fill: var(--bg-alt);
+  stroke: var(--bg-alt);
+  stroke-width: 1px;
+  stroke-dasharray: 0;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  transition-delay: 1.5s;
+  transition-duration: 0.75s;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-property: transform, opacity;
+}
+
+g[id^='b-'].inactive circle + circle {
+  opacity: 0;
+}
+
+g[id^='b-'].active circle + circle {
+  opacity: 1;
+}
+
+g[id^='b-'].active circle:nth-child(1) {
+  animation-name: dash;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 200ms;
+  animation-iteration-count: 1;
+  animation-play-state: running;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+}
+@keyframes dash {
+  from {
+    transform: rotate(0deg) scale(0.9);
+  }
+  to {
+    transform: rotate(180deg) scale(1);
+  }
+}
+/*
 
 g[id^='b-']:hover circle {
   fill: var(--bg-alt2);
@@ -82,25 +124,25 @@ g[id^='b-']:hover circle {
 }
 
 g[id^='b-']:active circle {
-  fill: var(--bg-alt2);
-  stroke: none;
-  transform: scale(0.9);
-}
-
-g[id^='b-'].inactive circle {
-  transform: scale(0.9);
   fill: transparent;
   stroke-dasharray: 3;
   stroke-dashoffset: 12;
   stroke: var(--bg-alt2);
 }
 
-.inactive circle {
+g[id^='b-'].inactive circle {
+  fill: transparent;
+  stroke-dasharray: 3;
+  stroke-dashoffset: 12;
+  stroke: var(--bg-alt2);
+}
+
+.active circle {
   animation-name: dash;
   animation-duration: 1.5s;
   animation-timing-function: ease-in-out;
   animation-delay: 200ms;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 1;
   animation-play-state: running;
   animation-fill-mode: forwards;
   animation-direction: alternate;
@@ -108,15 +150,22 @@ g[id^='b-'].inactive circle {
 
 @keyframes dash {
   from {
-    stroke-dashoffset: 12;
+    transform: rotate(0deg);
   }
   to {
-    stroke-dashoffset: 0;
+    transform: rotate(180deg);
   }
 }
 
+*/
+
 g[id^='b-'].inactive text {
   opacity: 0;
+  transform: scale(0.75);
+}
+g[id^='b-'].active text {
+  opacity: 1;
+  transform: scale(1);
 }
 
 g[id^='b-'] text {
@@ -126,10 +175,11 @@ g[id^='b-'] text {
   text-transform: uppercase;
   user-select: none;
   pointer-events: none;
-  transition-delay: 0.5s;
-  transition-duration: 0.5s;
+
+  transition-delay: 0.3s;
+  transition-duration: 0.75s;
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition-property: opacity;
+  transition-property: transform, opacity;
 }
 
 g[id^='d-'] {
