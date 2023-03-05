@@ -103,6 +103,7 @@ g[id^='b-'] text {
   fill: var(--fg);
   font-size: 8px;
   font-weight: 700;
+  text-transform: uppercase;
   user-select: none;
   pointer-events: none;
   transition-delay: 0.5s;

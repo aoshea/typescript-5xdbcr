@@ -79,6 +79,8 @@ const constraints = [];
 const blobs = [];
 // letter blob els
 const blob_els = [];
+// letter blob text els
+const text_els = [];
 // game internal count
 let t = 0;
 // game input text
@@ -142,7 +144,7 @@ function init() {
   for (let i = 0; i < 8; ++i) {
     const blob_el = document.querySelector('g#b-' + i);
     const text_el = blob_el.querySelector('text');
-    text_el.textContent = blobs[i].char;
+    text_els.push(text_el);
     // const debug_el = document.querySelector('g#d-' + i);
     // debug_el.setAttribute('transform', `translate(${x}, ${y})`);
     // blob_el.setAttribute('transform', `translate(${x}, ${y})`);
@@ -173,20 +175,23 @@ function advanceLevel() {
     ++game_level;
     // add letter to board
     // next available
-    console.log('game_level', game_level);
-    for (let i = 0; i < blobs.length; ++i) {
-      console.log(blobs[i].char, blobs[i].char === '');
-      if (blobs[i].char === '') {
-        blobs[i].char = getChar(i);
-        const blob_el = blob_els[i];
-        const text_el = blob_el.querySelector('text');
-        console.log(text_el);
-        text_el.textContent = blobs[i].char;
-        blob_el.classList.remove('inactive');
-        blob_el.classList.add('active');
-        break;
-      }
+    const wordsets = window.ZZ_INFO.split(',')[0].split('|');
+
+    let set = wordsets[game_level];
+
+    /*
+    for (let i = 0; i < set.length; ++i) {
+      const char = set.charAt(i);
+      
+      // attempt to place
+      
+      
+      console.log('char', char);
+      const blob = blobs[i];
+      const blob_el = blob_els[i];
+      blob.char = char;
     }
+    */
   } else {
     console.log('COMEPLETE!');
   }
@@ -206,7 +211,6 @@ function handleDelete() {
   if (input.length > 0) {
     input = input.slice(0, input.length - 1);
   }
-  renderInput();
 }
 
 function handleEnter() {
@@ -216,11 +220,9 @@ function handleEnter() {
   const game_level_answers = answers.filter((x) => x.length === len);
   console.log(game_level_answers);
   if (game_level_answers.indexOf(input.toLowerCase()) !== -1) {
-    console.log('CORRECT');
     advanceLevel();
-  } else {
-    console.log('INCORRECT');
   }
+  input = '';
 }
 
 function handleShuffle() {
@@ -240,7 +242,6 @@ function handler(e) {
         if (input.length < 8) {
           input += e.currentTarget.textContent.trim();
         }
-        renderInput();
       }
       break;
     case 'mouseup':
@@ -248,7 +249,6 @@ function handler(e) {
         if (input.length < 8) {
           input += e.currentTarget.textContent.trim();
         }
-        renderInput();
       }
       break;
     default:
@@ -285,11 +285,15 @@ function draw() {
   for (let i = 0; i < blobs.length; ++i) {
     const b = blobs[i];
     const b_el = blob_els[i];
-    const x = b.p.x;
-    const y = b.p.y;
-    //b_el.setAttribute('transform', `translate(${x}, ${y})`);
+    const text_el = text_els[i];
+    if (b.char !== '' && text_el.textContent === '') {
+      b_el.classList.remove('inactive');
+      b_el.classList.add('active');
+    }
+    text_el.textContent = b.char;
   }
   ++t;
+  renderInput();
 }
 
 // update input element
