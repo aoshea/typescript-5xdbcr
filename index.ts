@@ -171,29 +171,40 @@ function init() {
 }
 
 function advanceLevel() {
-  if (game_level < 6) {
+  if (game_level < 5) {
     ++game_level;
     // add letter to board
     // next available
     const wordsets = window.ZZ_INFO.split(',')[0].split('|');
 
     let set = wordsets[game_level];
-
-    /*
-    for (let i = 0; i < set.length; ++i) {
-      const char = set.charAt(i);
-      
-      // attempt to place
-      
-      
-      console.log('char', char);
-      const blob = blobs[i];
-      const blob_el = blob_els[i];
-      blob.char = char;
+    while (set.length > 0) {
+      let char = set.charAt(set.length - 1);
+      set = set.slice(0, set.length - 1);
+      // already there?
+      const index = blobs.map((x) => x.char).indexOf(char);
+      if (index === -1) {
+        for (let i = 0; i < blobs.length; ++i) {
+          if (blobs[i].char === '') {
+            blobs[i].char = char;
+            break;
+          }
+        }
+      }
     }
-    */
+
+    if (set.length > 0) {
+      for (let i = 0; i < set.length; ++i) {
+        for (let j = 0; j < blobs.length; ++j) {
+          if (blobs[j].char === '') {
+            blobs[j].char = set.charAt(i);
+            break;
+          }
+        }
+      }
+    }
   } else {
-    console.log('COMEPLETE!');
+    console.log('COMPLETE!');
   }
 }
 
@@ -201,7 +212,7 @@ function advanceLevel() {
 function getChar(i) {
   const wordsets = window.ZZ_INFO.split(',')[0].split('|');
   const set = wordsets[game_level];
-  const result = set.charAt(i).toUpperCase();
+  const result = set.charAt(i);
   console.log('res', result);
   return result;
 }
