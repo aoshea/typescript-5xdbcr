@@ -3,7 +3,7 @@ import './style.css';
 
 // physics constants
 const FRICTION = 0.99995;
-const REST = 23.4;
+const REST = 28;
 
 // point class
 function Point(x, y) {
@@ -104,9 +104,45 @@ function getPointOnCircle(i) {
   const cx = 50;
   const cy = 50;
   const angle = (Math.PI / 4) * i;
+
+  // 0,1,2,3 ===
+
   const radius = 30;
   const x = cx + Math.sin(angle) * radius;
   const y = cy + Math.cos(angle) * radius;
+  return { x, y };
+}
+
+function getZiggaPoint(i) {
+  const start = 0;
+  const step = 16;
+
+  // i = 0, row = 0
+  // i = 1, row = 0
+  // i = 2, row = 0
+  // i = 3, row = 0
+  // i = 4, row = 1
+  // i = 5, row = 1
+  // i = 6, row = 1
+  // i = 7, row = 2
+
+  let x = 0;
+  let y = 0;
+  let col = 0;
+  let row = 0;
+
+  let width = i >= 4 ? (i <= 7 ? 3 : 2) : 4;
+  let offset = width === 3 ? 1 : 0;
+
+  col = Math.floor((i - offset) % width);
+  row = Math.floor((i - offset) / width);
+
+  let width_offset = row === 2 ? offset * 24 : offset * 8;
+
+  console.log('i', i, 'row', row, 'col', col);
+  x = width_offset + col * step + start;
+  y = 50 - row * step;
+
   return { x, y };
 }
 
@@ -132,10 +168,11 @@ function init() {
   );
   constraints.push(constraint);
   for (let i = 0; i < 8; ++i) {
-    const { x, y } = getPointOnCircle(i);
+    const { x, y } = getZiggaPoint(i);
     const blob_el = document.querySelector('g#b-' + i);
     const debug_el = document.querySelector('g#d-' + i);
     debug_el.setAttribute('transform', `translate(${x}, ${y})`);
+    // blob_el.setAttribute('transform', `translate(${x}, ${y})`);
     blob_el.addEventListener('mousedown', handler, false);
     blob_el.addEventListener('mouseup', handler, false);
     blob_el.addEventListener('touchstart', handler, false);
@@ -207,7 +244,7 @@ function draw() {
     const b_el = blob_els[i];
     const x = b.p.x;
     const y = b.p.y;
-    b_el.setAttribute('transform', `translate(${x}, ${y})`);
+    //b_el.setAttribute('transform', `translate(${x}, ${y})`);
   }
   ++t;
 }
