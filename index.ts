@@ -5,6 +5,9 @@ import './style.css';
 const FRICTION = 0.99995;
 const REST = 28;
 
+window.ZZ_INFO =
+  'aeg|aegr|aegrs|adegrs|abdegrs|abdegirs,age|gear|rage|gears|rages|sarge|grades|badgers|abridges|brigades';
+
 // point class
 function Point(x, y) {
   this.x = x;
@@ -82,6 +85,8 @@ let t = 0;
 let input = '';
 // input state set initially
 let touch = false;
+// game level
+let game_level = 0;
 
 // svg element
 const svgDiv: SVGElement = document.querySelector('svg');
@@ -121,7 +126,7 @@ function init() {
   // create letter blobs
   for (let i = 0; i < 8; ++i) {
     const { x, y } = getPointOnCircle(i);
-    blobs.push(new Blob(new Point(x, y), 'A'));
+    blobs.push(new Blob(new Point(x, y), getChar(i)));
     if (i > 0) {
       // create constraint
       const constraint = new Constraint(REST, blobs[i - 1].p, blobs[i].p);
@@ -136,6 +141,8 @@ function init() {
   constraints.push(constraint);
   for (let i = 0; i < 8; ++i) {
     const blob_el = document.querySelector('g#b-' + i);
+    const text_el = blob_el.querySelector('text');
+    text_el.textContent = blobs[i].char;
     // const debug_el = document.querySelector('g#d-' + i);
     // debug_el.setAttribute('transform', `translate(${x}, ${y})`);
     // blob_el.setAttribute('transform', `translate(${x}, ${y})`);
@@ -161,6 +168,39 @@ function init() {
   gameloop();
 }
 
+function advanceLevel() {
+  if (game_level < 6) {
+    ++game_level;
+    // add letter to board
+    // next available
+    console.log('game_level', game_level);
+    for (let i = 0; i < blobs.length; ++i) {
+      console.log(blobs[i].char, blobs[i].char === '');
+      if (blobs[i].char === '') {
+        blobs[i].char = getChar(i);
+        const blob_el = blob_els[i];
+        const text_el = blob_el.querySelector('text');
+        console.log(text_el);
+        text_el.textContent = blobs[i].char;
+        blob_el.classList.remove('inactive');
+        blob_el.classList.add('active');
+        break;
+      }
+    }
+  } else {
+    console.log('COMEPLETE!');
+  }
+}
+
+// get char by index
+function getChar(i) {
+  const wordsets = window.ZZ_INFO.split(',')[0].split('|');
+  const set = wordsets[game_level];
+  const result = set.charAt(i).toUpperCase();
+  console.log('res', result);
+  return result;
+}
+
 // handle delete
 function handleDelete() {
   if (input.length > 0) {
@@ -171,6 +211,16 @@ function handleDelete() {
 
 function handleEnter() {
   console.log('compare ', input, 'with answer?');
+  const answers = window.ZZ_INFO.split(',')[1].split('|');
+  const len = game_level + 3;
+  const game_level_answers = answers.filter((x) => x.length === len);
+  console.log(game_level_answers);
+  if (game_level_answers.indexOf(input.toLowerCase()) !== -1) {
+    console.log('CORRECT');
+    advanceLevel();
+  } else {
+    console.log('INCORRECT');
+  }
 }
 
 function handleShuffle() {

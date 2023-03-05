@@ -57,6 +57,7 @@ body {
   touch-action: manipulation;
 }
 
+
 g[id^='b-'] {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
@@ -65,12 +66,22 @@ g[id^='b-'] circle {
   stroke: none;
   stroke-width: 1px;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  transition-delay: 0;
+  transition-duration: 0.5s;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-property: transform;
 }
+
+g[id^='b-'].active circle {
+  transform: rotate(90deg) scale(1);
+}
+
 g[id^='b-']:hover circle {
   fill: var(--bg-alt2);
   stroke: none;
   transition: transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
 g[id^='b-']:active circle {
   fill: var(--bg-alt2);
   stroke: none;
@@ -94,7 +105,12 @@ g[id^='b-'] text {
   font-weight: 700;
   user-select: none;
   pointer-events: none;
+  transition-delay: 0.5s;
+  transition-duration: 0.5s;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-property: opacity;
 }
+
 g[id^='d-'] {
   pointer-events: none;
 }
