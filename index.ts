@@ -136,7 +136,7 @@ function init() {
   constraints.push(constraint);
   for (let i = 0; i < 8; ++i) {
     const blob_el = document.querySelector('g#b-' + i);
-    const debug_el = document.querySelector('g#d-' + i);
+    // const debug_el = document.querySelector('g#d-' + i);
     // debug_el.setAttribute('transform', `translate(${x}, ${y})`);
     // blob_el.setAttribute('transform', `translate(${x}, ${y})`);
     blob_el.addEventListener('mousedown', handler, false);
@@ -150,8 +150,31 @@ function init() {
 
     blob_els.push(blob_el);
   }
+  // add listeners to buttons
+  const delete_btn = document.querySelector('button[name="delete"]');
+  const enter_btn = document.querySelector('button[name="enter"]');
+  const shuffle_btn = document.querySelector('button[name="shuffle"]');
+  delete_btn.addEventListener('click', handleDelete, false);
+  enter_btn.addEventListener('click', handleEnter, false);
+  shuffle_btn.addEventListener('click', handleShuffle, false);
 
   gameloop();
+}
+
+// handle delete
+function handleDelete() {
+  if (input.length > 0) {
+    input = input.slice(0, input.length - 1);
+  }
+  renderInput();
+}
+
+function handleEnter() {
+  console.log('compare ', input, 'with answer?');
+}
+
+function handleShuffle() {
+  console.log('jumble the letters');
 }
 
 // handle click

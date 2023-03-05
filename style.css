@@ -221,15 +221,6 @@ footer.zz--strip {
   color: var(--fg);
   margin: 0.25rem 0.25rem 1rem;
   padding: 0.25rem 0.5rem;
-  /*
-  padding: 0.25rem 1rem;
-  font-size: 24px;
-  background-color: var(--bg-alt);
-  appearance: none;
-  border-radius: 4px;
-  color: var(--fg);
-  border: none;
-  */
 }
 
 .zz--controls button:nth-child(2) {
