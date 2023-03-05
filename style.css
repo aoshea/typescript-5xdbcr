@@ -57,7 +57,6 @@ body {
   touch-action: manipulation;
 }
 
-
 g[id^='b-'] {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
@@ -92,7 +91,28 @@ g[id^='b-'].inactive circle {
   transform: scale(0.9);
   fill: transparent;
   stroke-dasharray: 3;
+  stroke-dashoffset: 50%;
   stroke: var(--bg-alt2);
+}
+
+.inactive circle {
+  animation-name: dash;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 200ms;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 100%;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 g[id^='b-'].inactive text {
