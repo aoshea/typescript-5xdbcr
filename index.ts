@@ -96,7 +96,8 @@ const svgDiv: SVGElement = document.querySelector('svg');
 const debugEl: HTMLElement = document.querySelector('.zz--debug');
 // input el
 const inputEl = document.querySelector('input[name="input"]');
-console.log(inputEl);
+// score plum el
+const plumEl = document.querySelector('div.zz--plum');
 
 window.addEventListener('resize', layout);
 layout();
@@ -166,12 +167,20 @@ function init() {
   delete_btn.addEventListener('click', handleDelete, false);
   enter_btn.addEventListener('click', handleEnter, false);
   shuffle_btn.addEventListener('click', handleShuffle, false);
+  // init plum
+  plumEl.addEventListener('animationend', () => {
+    console.log('animatione end!');
+    plumEl.classList.remove('show');
+  });
 
   gameloop();
 }
 
 function advanceLevel() {
   if (game_level < 5) {
+    const plumtexts = ['Nice!', 'Great!', 'Amazing!', 'Super!', 'Incredible!'];
+    plumEl.textContent = plumtexts[game_level];
+    plumEl.classList.add('show');
     ++game_level;
     // add letter to board
     // next available
@@ -204,7 +213,8 @@ function advanceLevel() {
       }
     }
   } else {
-    console.log('COMPLETE!');
+    plumEl.textContent = 'You win!';
+    plumEl.classList.add('show');
   }
 }
 
