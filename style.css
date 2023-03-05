@@ -91,7 +91,7 @@ g[id^='b-'].inactive circle {
   transform: scale(0.9);
   fill: transparent;
   stroke-dasharray: 3;
-  stroke-dashoffset: 50%;
+  stroke-dashoffset: 12;
   stroke: var(--bg-alt2);
 }
 
@@ -108,7 +108,7 @@ g[id^='b-'].inactive circle {
 
 @keyframes dash {
   from {
-    stroke-dashoffset: 100%;
+    stroke-dashoffset: 12;
   }
   to {
     stroke-dashoffset: 0;
